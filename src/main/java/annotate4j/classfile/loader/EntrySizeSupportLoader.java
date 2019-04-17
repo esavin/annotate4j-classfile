@@ -169,7 +169,19 @@ public class EntrySizeSupportLoader extends InputStreamLoader {
 
         Class clazz = (Class) ((ParameterizedType) t).getActualTypeArguments()[0];
         long containerSize = getContainerSize(f);
-        List list = new ArrayList();
+        List list = null;
+        try {
+            Method getter = ReflectionHelper.getGetter(instance.getClass(), f.getName());
+            Object obj = getter.invoke(instance);
+            if (obj instanceof List){
+                list = (List) obj;
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        if (list == null) {
+            list = new ArrayList();
+        }
         long l = 0;
         int dec = 0;
         while (l < containerSize) {
