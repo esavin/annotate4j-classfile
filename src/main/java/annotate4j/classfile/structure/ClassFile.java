@@ -6,6 +6,7 @@ import annotate4j.core.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.ContainerSize;
 import annotate4j.core.bin.annotation.Inject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,8 @@ public class ClassFile implements HasAttributeList {
 
     @FieldOrder(index = 5)
     @ContainerSize(fieldName = "constantPoolCount", corrector = -1)
-    private List<ConstantPool> constantPoolList;
+    @Inject(fieldName = "constantPoolList")
+    private List<ConstantPool> constantPoolList = new ArrayList<>();
 
     @FieldOrder(index = 6)
     private Short accessFlag;
@@ -59,6 +61,7 @@ public class ClassFile implements HasAttributeList {
     @FieldOrder(index = 14)
     @ContainerSize(fieldName = "methodsCount")
     @Inject(fieldName = "constantPoolList")
+    @Inject(fieldName = "thisClassIndex")
     private List<Method> methodList;
 
     @FieldOrder(index = 15)
