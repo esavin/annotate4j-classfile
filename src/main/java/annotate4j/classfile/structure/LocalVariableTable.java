@@ -1,6 +1,10 @@
 package annotate4j.classfile.structure;
 
+import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.core.annotation.FieldOrder;
+
+import java.util.List;
 
 /**
  * @author Eugene Savin
@@ -21,6 +25,8 @@ public class LocalVariableTable implements HasDescriptorIndex {
 
     @FieldOrder(index = 5)
     private short index;
+
+    private List<ConstantPool> constantPoolList;
 
     public Short getDescriptorIndex() {
         return descriptorIndex;
@@ -60,5 +66,20 @@ public class LocalVariableTable implements HasDescriptorIndex {
 
     public void setStartPc(short startPc) {
         this.startPc = startPc;
+    }
+
+    public List<ConstantPool> getConstantPoolList() {
+        return constantPoolList;
+    }
+
+    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+        this.constantPoolList = constantPoolList;
+    }
+
+    @Override
+    public String toString() {
+        String fieldName = ((Utf8Info) getConstantPoolList().get(nameIndex - 1)).getBytesStr();
+        String descriptor = ((Utf8Info) getConstantPoolList().get(descriptorIndex - 1)).getBytesStr();
+        return fieldName + "     " + descriptor;
     }
 }
