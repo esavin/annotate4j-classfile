@@ -3,11 +3,17 @@ package annotate4j.classfile.structure;
 import annotate4j.classfile.structure.attribute.Attribute;
 import annotate4j.classfile.structure.constantpool.ConstantPool;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
+import annotate4j.classfile.structure.types.Type;
+import annotate4j.classfile.structure.types.TypeList;
+import annotate4j.core.Loader;
 import annotate4j.core.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.ContainerSize;
 import annotate4j.core.bin.annotation.Inject;
+import annotate4j.core.bin.exceptions.FieldReadException;
+import annotate4j.core.bin.loader.InputStreamLoader;
 
-import javax.annotation.PostConstruct;
+
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +38,8 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
         methodAccessAndPropertyFlags.put((short)0x0800, "strictfp");
         methodAccessAndPropertyFlags.put((short)0x1000, "ACC_SYNTHETIC"); // Declared synthetic; not present in the source code.
     }
+
+    private Short thisClassIndex;
 
 
     @FieldOrder(index = 1)
@@ -67,6 +75,17 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
 
     public void setAttributeList(List<Attribute> attributeList) {
         this.attributeList = attributeList;
+    }
+
+    public static TypeList getTypeList(String descriptor){
+        Loader loader = new InputStreamLoader(new ByteArrayInputStream(descriptor.getBytes()), new TypeList());
+        TypeList typeList = null;
+        try {
+            typeList = (TypeList) loader.load();
+        } catch (FieldReadException e) {
+            e.printStackTrace();
+        }
+        return typeList;
     }
 
     public short getAttributesCount() {
@@ -105,7 +124,17 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
 
     public String getMethodName(){
         Utf8Info name = (Utf8Info) getConstantPoolList().get(nameIndex - 1);
-        return name.getBytesStr();
+        String methodName = name.getBytesStr();
+        if (methodName.equals("<init>")){
+            methodName = constantPoolList.get(getThisClassIndex() - 1).toString();
+            if (methodName.contains("/")) {
+                methodName = methodName.substring(methodName.lastIndexOf("/") + 1);
+            }
+        }
+        if (methodName.equals("<clinit>")){
+            return "";
+        }
+        return methodName;
     }
 
     public String getDescription(){
@@ -117,32 +146,58 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
         return constantPoolList;
     }
 
-    @PostConstruct
     public void setConstantPoolList(List<ConstantPool> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 
+    public Short getThisClassIndex() {
+        return thisClassIndex;
+    }
+
+    public void setThisClassIndex(Short thisClassIndex) {
+        this.thisClassIndex = thisClassIndex;
+    }
+
     private String getReturnValue(){
         String description = getDescription();
-        int index = description.lastIndexOf(')');
-        return description.substring(index + 2).replaceAll("/", ".").replaceAll(";", " ");
 
+        int index = description.lastIndexOf(')');
+        description = description.substring(index + 1);
+        if (description.equals("V")){
+            Utf8Info name = (Utf8Info) getConstantPoolList().get(nameIndex - 1);
+            String methodName = name.getBytesStr();
+            if (methodName.equals("<init>") || methodName.equals("<clinit>")){
+                return "";
+            }
+            return "void";
+        }
+        return  Field.getType(description);
     }
 
     private String getMethodParams() {
         String description = getDescription();
         int from = description.lastIndexOf('(');
         int to = description.lastIndexOf(')');
-        return description.substring(from, to + 1).replaceAll("/", ".").replaceAll(";", " ").replaceAll("\\(L", "(");
+        return description.substring(from + 1, to);
     }
 
     @Override
     public String toString() {
 
+        StringBuilder params = new StringBuilder();
+        int index = 1;
+        TypeList typeList = getTypeList(getMethodParams());
+        for (Type type: typeList.getTypeList()){
+            params.append(type.getTypeName()).append(" param").append(index).append(", ");
+            index++;
+        }
+        if (params.length() > 2){
+            params.setLength(params.length() - 2);
+        }
 
         return getMethodAccessProperties() + " " + getReturnValue() +
                 " " + getMethodName() + " "
-                 + getMethodParams();
+                 + "(" + params.toString() + ")";
 
     }
 }
