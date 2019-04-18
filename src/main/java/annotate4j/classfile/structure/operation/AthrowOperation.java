@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class AthrowOperation extends Operation {
 
+    public AthrowOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "athrow";
     }

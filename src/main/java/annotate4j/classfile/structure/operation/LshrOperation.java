@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class LshrOperation extends Operation {
 
+    public LshrOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "lshr";
     }

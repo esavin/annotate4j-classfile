@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class IloadOperation extends Operation {
 
+    public IloadOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 2);
+    }
+
     @FieldOrder(index = 2)
     private byte index;
 

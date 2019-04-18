@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class IfAcmpOperation extends Operation {
 
+    public IfAcmpOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 3);
+    }
+
     @FieldOrder(index=2)
     public short address;
 

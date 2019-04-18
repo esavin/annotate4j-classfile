@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class AconstNullOperation extends Operation {
 
+    public AconstNullOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "aconst_null";
     }

@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class Pop2Operation extends Operation {
 
+    public Pop2Operation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "pop2";
     }

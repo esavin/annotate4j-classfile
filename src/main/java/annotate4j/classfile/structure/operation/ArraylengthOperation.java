@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class ArraylengthOperation extends Operation {
 
+    public ArraylengthOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 3);
+    }
+
     public String getMnemonic() {
         return "arraylength";
     }

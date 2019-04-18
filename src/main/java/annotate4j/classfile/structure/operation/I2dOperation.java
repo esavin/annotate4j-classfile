@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class I2dOperation extends Operation {
 
+    public I2dOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "i2d";
     }

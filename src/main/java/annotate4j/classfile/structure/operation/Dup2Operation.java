@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class Dup2Operation extends Operation {
 
+    public Dup2Operation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "dup2";
     }

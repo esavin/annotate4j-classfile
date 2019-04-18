@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class D2lOperation extends Operation {
 
+    public D2lOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "d2l";
     }

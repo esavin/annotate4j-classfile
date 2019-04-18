@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class IconstNOperation extends Operation {
 
+    public IconstNOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "iconst_" + (getOpcode() - 3);
     }

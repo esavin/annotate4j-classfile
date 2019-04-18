@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class GetstaticOperation extends Operation {
 
+    public GetstaticOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 3);
+    }
+
     @FieldOrder(index = 2)
     private short index;
 
@@ -25,6 +29,6 @@ public class GetstaticOperation extends Operation {
 
     @Override
     public String toString() {
-        return super.toString() + " " + index;
+        return super.toString() + " " + getConstantPoolList().get(index - 1).toString();
     }
 }

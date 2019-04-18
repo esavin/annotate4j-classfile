@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class FcmpgOperation extends Operation {
 
+    public FcmpgOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "fcmpg";
     }

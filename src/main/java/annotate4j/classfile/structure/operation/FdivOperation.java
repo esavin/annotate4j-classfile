@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class FdivOperation extends Operation {
 
+    public FdivOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "fdiv";
     }

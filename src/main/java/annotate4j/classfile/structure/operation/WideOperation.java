@@ -10,7 +10,10 @@ import annotate4j.core.annotation.FieldOrder;
 
 
 public class WideOperation extends Operation {
+
     public WideOperation() {
+        // TODO increment opcode counter
+
         throw new RuntimeException("Not implemented");
     }
 

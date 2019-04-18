@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class JsrWOperation extends Operation {
 
+    public JsrWOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 5);
+    }
+
     @FieldOrder(index = 2)
     private int offset;
 

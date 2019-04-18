@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class FmulOperation extends Operation {
 
+    public FmulOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "fmul";
     }

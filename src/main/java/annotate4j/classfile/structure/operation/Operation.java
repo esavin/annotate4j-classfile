@@ -15,6 +15,8 @@ import java.util.*;
 
 public class Operation implements HasInheritor<Operation> {
 
+    private byte[] code;
+
     private final static Map<Byte, Class<? extends Operation>> m = new HashMap<Byte, Class<? extends Operation>>();
 
     static {
@@ -230,7 +232,6 @@ public class Operation implements HasInheritor<Operation> {
     private Stack<Object> stack;
 
     public Operation() {
-
     }
 
     public Operation(List<ConstantPool> cp, Stack<Object> stack) {
@@ -305,5 +306,13 @@ public class Operation implements HasInheritor<Operation> {
 
     public String toString() {
         return  (0x0FF & (int) getOpcode()) + ": " + getMnemonic();
+    }
+
+    public byte[] getCode() {
+        return code;
+    }
+
+    public void setCode(byte[] code) {
+        this.code = code;
     }
 }

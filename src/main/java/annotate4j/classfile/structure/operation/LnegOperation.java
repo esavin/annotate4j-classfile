@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class LnegOperation extends Operation {
 
+    public LnegOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "lneg";
     }

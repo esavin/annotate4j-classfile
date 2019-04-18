@@ -1,12 +1,24 @@
 package annotate4j.classfile.structure.operation;
 
 import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.Inject;
 
 import java.util.List;
 
 public class OperationList {
 
+    private byte[] code;
+
+    private static ThreadLocal<Integer> codePosition = new ThreadLocal<>();
+
+
+    public OperationList(byte[] code) {
+        this.code = code;
+        codePosition.set(0);
+    }
+
     @FieldOrder(index = 1)
+    @Inject(fieldName = "code")
     List<Operation> operations;
 
     public List<Operation> getOperations() {
@@ -15,5 +27,21 @@ public class OperationList {
 
     public void setOperations(List<Operation> operations) {
         this.operations = operations;
+    }
+
+    public byte[] getCode() {
+        return code;
+    }
+
+    public OperationList getOperationList() {
+        return this;
+    }
+
+    public static int getCodePosition() {
+        return codePosition.get();
+    }
+
+    public static void setCodePosition(int codePosition) {
+        OperationList.codePosition.set(codePosition);
     }
 }

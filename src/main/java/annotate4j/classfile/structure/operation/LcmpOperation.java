@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class LcmpOperation extends Operation {
 
+    public LcmpOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "lcmp";
     }

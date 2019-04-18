@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class DaloadOperation extends Operation {
 
+    public DaloadOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "daload";
     }

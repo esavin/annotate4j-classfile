@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class FastoreOperation extends Operation {
 
+    public FastoreOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "fastore";
     }

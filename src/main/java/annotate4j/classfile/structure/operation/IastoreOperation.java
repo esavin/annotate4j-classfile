@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class IastoreOperation extends Operation {
 
+    public IastoreOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "iastore";
     }

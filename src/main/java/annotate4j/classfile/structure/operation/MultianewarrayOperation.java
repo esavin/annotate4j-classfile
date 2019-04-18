@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class MultianewarrayOperation extends Operation {
 
+    public MultianewarrayOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 4);
+    }
+
     @FieldOrder(index = 2)
     private short index;
 

@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class IremOperation extends Operation {
 
+    public IremOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "irem";
     }

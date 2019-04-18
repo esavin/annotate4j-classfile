@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class SipushOperation extends Operation {
 
+    public SipushOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 3);
+    }
+
     @FieldOrder(index = 2)
     private short s;
 

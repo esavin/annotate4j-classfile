@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class Impdep1Operation extends Operation {
 
+    public Impdep1Operation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "impdep1";
     }

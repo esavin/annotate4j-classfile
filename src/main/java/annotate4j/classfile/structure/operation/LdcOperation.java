@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class LdcOperation extends Operation {
 
+    public LdcOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 2);
+    }
+
     @FieldOrder(index = 2)
     private byte index;
 
@@ -25,6 +29,6 @@ public class LdcOperation extends Operation {
 
     @Override
     public String toString() {
-        return super.toString() + " " + index;
+        return super.toString() + " " + getConstantPoolList().get(index - 1).toString();
     }
 }

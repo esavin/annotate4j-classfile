@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class FaddOperation extends Operation {
 
+    public FaddOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "fadd";
     }

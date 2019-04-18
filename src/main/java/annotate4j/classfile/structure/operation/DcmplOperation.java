@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class DcmplOperation extends Operation {
 
+    public DcmplOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "dcmpl";
     }

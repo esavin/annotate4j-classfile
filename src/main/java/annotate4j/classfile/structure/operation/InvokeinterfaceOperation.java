@@ -9,6 +9,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class InvokeinterfaceOperation extends Operation {
 
+    public InvokeinterfaceOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 5);
+    }
+
     @FieldOrder(index = 2)
     private short index;
 

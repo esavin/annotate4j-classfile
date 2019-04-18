@@ -8,6 +8,10 @@ import annotate4j.core.annotation.FieldOrder;
  */
 public class GotoWOperation extends Operation {
 
+    public GotoWOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 5);
+    }
+
     @FieldOrder(index = 2)
     private int branchoffset;
 

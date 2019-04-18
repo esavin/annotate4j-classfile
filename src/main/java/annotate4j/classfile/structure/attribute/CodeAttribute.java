@@ -71,7 +71,7 @@ public class CodeAttribute extends Attribute implements HasAttributeList {
 
     public void setCode(byte[] code) {
         this.code = code;
-        Loader loader = new InputStreamLoader(new ByteArrayInputStream(code), new OperationList());
+        Loader loader = new InputStreamLoader(new ByteArrayInputStream(code), new OperationList(code));
         try {
             this.operationList = (OperationList) loader.load();
             for (Operation operation: operationList.getOperations()){

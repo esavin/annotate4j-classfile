@@ -6,6 +6,9 @@ package annotate4j.classfile.structure.operation;
  */
 public class NopOperation extends Operation {
 
+    public NopOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
 
     public String getMnemonic() {
         return "nop";

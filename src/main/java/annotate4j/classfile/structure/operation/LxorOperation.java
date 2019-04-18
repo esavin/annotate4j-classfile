@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class LxorOperation extends Operation {
 
+    public LxorOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "lxor";
     }

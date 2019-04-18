@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class FstoreNOperation extends Operation {
 
+    public FstoreNOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "fstore_" + (getOpcode() - 67);
     }

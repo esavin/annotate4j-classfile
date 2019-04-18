@@ -6,7 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class LookupswitchOperation extends Operation {
 
+
+
     public LookupswitchOperation() {
+        // TODO increment opcode counter
         throw new RuntimeException("Not implemented");
     }
 

@@ -6,6 +6,10 @@ package annotate4j.classfile.structure.operation;
  */
 public class LandOperation extends Operation {
 
+    public LandOperation() {
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
     public String getMnemonic() {
         return "land";
     }
