@@ -17,4 +17,9 @@ public class StringInfo extends ConstantPool {
     public void setStringIndex(short stringIndex) {
         this.stringIndex = stringIndex;
     }
+
+    @Override
+    public String toString() {
+        return ((Utf8Info)getConstantPoolList().get(stringIndex - 1)).getBytesStr();
+    }
 }

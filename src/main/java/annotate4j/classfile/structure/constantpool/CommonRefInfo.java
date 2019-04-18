@@ -28,4 +28,11 @@ public class CommonRefInfo extends ConstantPool {
     public void setNameAndTypeIndex(short nameAndTypeIndex) {
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
+
+    @Override
+    public String toString() {
+        String className = getConstantPoolList().get(classIndex - 1).toString();
+        NameAndTypeInfo nameAndTypeInfo = (NameAndTypeInfo) getConstantPoolList().get(nameAndTypeIndex - 1);
+        return className + "  " + nameAndTypeInfo.toString();
+    }
 }

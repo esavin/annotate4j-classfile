@@ -29,4 +29,12 @@ public class NameAndTypeInfo extends ConstantPool implements HasDescriptorIndex 
     public void setNameIndex(short nameIndex) {
         this.nameIndex = nameIndex;
     }
+
+    @Override
+    public String toString() {
+
+        String name = ((Utf8Info) getConstantPoolList().get(nameIndex - 1)).getBytesStr();
+        String descriptor = ((Utf8Info) getConstantPoolList().get(descriptorIndex - 1)).getBytesStr();
+        return name + "  " + descriptor;
+    }
 }

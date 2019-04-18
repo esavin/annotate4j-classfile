@@ -37,4 +37,9 @@ public class Utf8Info extends ConstantPool {
     public String getBytesStr() {
         return bytesStr;
     }
+
+    @Override
+    public String toString() {
+        return bytesStr;
+    }
 }

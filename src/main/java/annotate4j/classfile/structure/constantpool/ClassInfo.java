@@ -17,4 +17,9 @@ public class ClassInfo extends ConstantPool {
     public void setNameIndex(short nameIndex) {
         this.nameIndex = nameIndex;
     }
+
+    @Override
+    public String toString() {
+        return ((Utf8Info) getConstantPoolList().get(nameIndex-1)).getBytesStr();
+    }
 }

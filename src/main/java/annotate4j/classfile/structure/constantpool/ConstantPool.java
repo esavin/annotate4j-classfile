@@ -6,6 +6,7 @@ import annotate4j.core.exceptions.InheritorNotFoundException;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +16,8 @@ import java.util.Map;
 
 public class ConstantPool implements HasInheritor<ConstantPool> {
     private final static Map<Byte, Class<? extends ConstantPool>> m = new HashMap<Byte, Class<? extends ConstantPool>>();
+
+    private List<ConstantPool> constantPoolList;
 
     static {
         m.put((byte) 7, ClassInfo.class);
@@ -53,5 +56,13 @@ public class ConstantPool implements HasInheritor<ConstantPool> {
     @Override
     public Collection<Class<? extends ConstantPool>> getInheritors() {
         return m.values();
+    }
+
+    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+        this.constantPoolList = constantPoolList;
+    }
+
+    public List<ConstantPool> getConstantPoolList() {
+        return constantPoolList;
     }
 }
