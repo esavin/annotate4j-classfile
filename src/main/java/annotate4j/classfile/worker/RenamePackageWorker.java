@@ -7,10 +7,7 @@ import annotate4j.classfile.structure.Method;
 import annotate4j.classfile.structure.annotation.Annotation;
 import annotate4j.classfile.structure.attribute.*;
 import annotate4j.classfile.structure.constantpool.*;
-import annotate4j.classfile.structure.operation.LdcOperation;
-import annotate4j.classfile.structure.operation.Operation;
 import annotate4j.core.worker.Worker;
-
 
 import java.util.List;
 
