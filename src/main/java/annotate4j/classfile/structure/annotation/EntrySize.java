@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * of entries will be created in container, the current element will be placed in <code>index</code>
  * entry and others entries will be <code>null</code>
  * <p/>
- * Read JSR-202, The class File Format documentation, section 4.5.5
+ * Read JSR-202, The class File Format documentation, section 4.4.5 (The CONSTANT_Long_info and CONSTANT_Double_info Structures)
  *
  * @author Eugene Savin
  */
