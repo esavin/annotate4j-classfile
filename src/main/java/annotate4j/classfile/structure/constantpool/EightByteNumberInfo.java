@@ -6,7 +6,7 @@ import annotate4j.core.annotation.FieldOrder;
 /**
  * @author Eugene Savin
  */
-@EntrySize(value = 2, index = 2)
+@EntrySize(value = 2, index = 1)
 public class EightByteNumberInfo extends ConstantPool {
 
     @FieldOrder(index = 2)
