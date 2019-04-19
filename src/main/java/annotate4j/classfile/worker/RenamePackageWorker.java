@@ -7,6 +7,8 @@ import annotate4j.classfile.structure.Method;
 import annotate4j.classfile.structure.annotation.Annotation;
 import annotate4j.classfile.structure.attribute.*;
 import annotate4j.classfile.structure.constantpool.*;
+import annotate4j.classfile.structure.operation.LdcOperation;
+import annotate4j.classfile.structure.operation.Operation;
 import annotate4j.core.worker.Worker;
 
 
@@ -43,17 +45,13 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
             for (Attribute attribute : field.getAttributeList()) {
                 if (attribute instanceof SignatureAttribute) {
                     SignatureAttribute signatureAttribute = (SignatureAttribute) attribute;
-                    short signatureIndex = signatureAttribute.getSignatureIndex();
-                    Utf8Info methodSignature = (Utf8Info) constantPoolList.get(signatureIndex - 1);
-                    replaceInUtf8Info(methodSignature);
+                    replaceByIndex(constantPoolList, signatureAttribute.getSignatureIndex());
                 }
             }
         }
 
         for (Method method : classFile.getMethodList()) {
-            short methodDescriptorIndex = method.getDescriptorIndex();
-            Utf8Info methodParameters = (Utf8Info) constantPoolList.get(methodDescriptorIndex - 1);
-            replaceInUtf8Info(methodParameters);
+            replaceByIndex(constantPoolList, method.getDescriptorIndex());
 
             for (Attribute attribute : method.getAttributeList()) {
                 if (attribute instanceof CodeAttribute) {
@@ -63,12 +61,23 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
                             LocalVariableTableAttribute localVariableTableAttribute = (LocalVariableTableAttribute) codeAttribute;
                             List<LocalVariableTable> localVariableTableList = localVariableTableAttribute.getLocalVariableTableList();
                             for (LocalVariableTable localVariableTable : localVariableTableList) {
-                                short index = localVariableTable.getDescriptorIndex();
-                                Utf8Info utf8Info = (Utf8Info) constantPoolList.get(index - 1);
-                                replaceInUtf8Info(utf8Info);
+                                replaceByIndex(constantPoolList, localVariableTable.getDescriptorIndex());
                             }
                         }
                     }
+/*
+                    // not sure that we should replace it
+                    for (Operation operation: code.getOperationList().getOperations()){
+                        if (operation instanceof LdcOperation ){
+                            LdcOperation ldc = (LdcOperation) operation;
+                            ConstantPool cp = constantPoolList.get(ldc.getIndex()-1);
+                            if (cp instanceof StringInfo){
+                                replaceByIndex(constantPoolList, ((StringInfo)cp).getStringIndex());
+                            }
+
+                        }
+                    }
+*/
                 }
 
                 replaceInAttributes(constantPoolList, attribute);
@@ -88,26 +97,20 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
         if (attribute instanceof RuntimeVisibleAnnotationsAttribute) {
             RuntimeVisibleAnnotationsAttribute runtimeVisibleAnnotationsAttribute = (RuntimeVisibleAnnotationsAttribute) attribute;
             for (Annotation annotation : runtimeVisibleAnnotationsAttribute.getAnnotationList()) {
-                short index = annotation.getTypeIndex();
-                Utf8Info utf8Info = (Utf8Info) constantPoolList.get(index - 1);
-                replaceInUtf8Info(utf8Info);
+                replaceByIndex(constantPoolList, annotation.getTypeIndex());
             }
         }
 
         if (attribute instanceof RuntimeInvisibleAnnotationsAttribute) {
             RuntimeInvisibleAnnotationsAttribute runtimeInvisibleAnnotationsAttribute = (RuntimeInvisibleAnnotationsAttribute) attribute;
             for (Annotation annotation : runtimeInvisibleAnnotationsAttribute.getAnnotationList()) {
-                short index = annotation.getTypeIndex();
-                Utf8Info utf8Info = (Utf8Info) constantPoolList.get(index - 1);
-                replaceInUtf8Info(utf8Info);
+                replaceByIndex(constantPoolList, annotation.getTypeIndex());
             }
         }
 
         if (attribute instanceof SignatureAttribute) {
             SignatureAttribute signatureAttribute = (SignatureAttribute) attribute;
-            short signatureIndex = signatureAttribute.getSignatureIndex();
-            Utf8Info methodSignature = (Utf8Info) constantPoolList.get(signatureIndex - 1);
-            replaceInUtf8Info(methodSignature);
+            replaceByIndex(constantPoolList, signatureAttribute.getSignatureIndex());
         }
 
     }
@@ -115,14 +118,15 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
     private void replaceInMethodsAndFields(List<ConstantPool> constantPoolList, CommonRefInfo cri) {
         short nameAndTypeIndex = cri.getNameAndTypeIndex();
         NameAndTypeInfo nameAndTypeInfo = (NameAndTypeInfo) constantPoolList.get(nameAndTypeIndex - 1);
-        short descriptorIndex = nameAndTypeInfo.getDescriptorIndex();
-        Utf8Info utf8Info = (Utf8Info) constantPoolList.get(descriptorIndex - 1);
-        replaceInUtf8Info(utf8Info);
+        replaceByIndex(constantPoolList, nameAndTypeInfo.getDescriptorIndex());
     }
 
     private void replaceInClassInfo(List<ConstantPool> constantPoolList, ClassInfo ci) {
-        int classNameIndex = ci.getNameIndex() - 1;
-        Utf8Info utf8Info = (Utf8Info) constantPoolList.get(classNameIndex);
+        replaceByIndex(constantPoolList, ci.getNameIndex());
+    }
+
+    private void replaceByIndex(List<ConstantPool> constantPoolList, int index){
+        Utf8Info utf8Info = (Utf8Info) constantPoolList.get(index - 1);
         replaceInUtf8Info(utf8Info);
     }
 
