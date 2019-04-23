@@ -6,9 +6,12 @@ import annotate4j.core.DumpBuilder;
 import annotate4j.core.bin.dump.OutputStreamBuilder;
 import annotate4j.core.bin.dump.exceptions.FieldWriteException;
 import annotate4j.core.bin.exceptions.FieldReadException;
+import annotate4j.core.worker.Worker;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -20,6 +23,8 @@ import java.util.zip.ZipOutputStream;
 public class JarHandler {
 
     private final static int BUFFER_SIZE = 1024;
+
+    List<Worker> workers = new ArrayList<>();
 
 
     public void processJar(String inputJar, String outputJar) throws IOException, FieldReadException, FieldWriteException {
@@ -42,7 +47,7 @@ public class JarHandler {
                 String name = entry.getName();
                 ZipEntry ee = f.getEntry(name);
                 ZipEntry newEntry = new ZipEntry(name);
-                zos.putNextEntry(ee);
+                zos.putNextEntry(newEntry);
                 zos.flush();
                 String extension = "";
                 if (name != null && name.length() > 6) {
@@ -53,19 +58,23 @@ public class JarHandler {
                     EntrySizeSupportLoader loader = new EntrySizeSupportLoader(f.getInputStream(ee));
 
                     ClassFile classFile = (ClassFile) loader.load();
+                    if (workers != null && workers.size() > 0) {
+                        for (Worker worker : workers) {
+                            classFile = (ClassFile) worker.doWork(classFile);
+                        }
+                    }
 
                     DumpBuilder dBuilder = new OutputStreamBuilder(zos);
                     dBuilder.dump(classFile);
                 } else if (!newEntry.isDirectory()) {
-                    writeContent(f.getInputStream(ee), zos);
+                    writeContent(f.getInputStream(newEntry), zos);
                 }
                 zos.flush();
                 zos.closeEntry();
             }
             zos.finish();
-        }
 
-        finally {
+        } finally {
             if (zos != null) {
                 zos.flush();
                 zos.close();
@@ -73,7 +82,11 @@ public class JarHandler {
         }
     }
 
-    public static void main(String[] args) {
+    public void addWorker(Worker worker) {
+        workers.add(worker);
+    }
+
+    public static void main(String[] args) throws Exception {
 
         if (args.length < 1) {
             System.out.println("Please specify input jar and output dir");

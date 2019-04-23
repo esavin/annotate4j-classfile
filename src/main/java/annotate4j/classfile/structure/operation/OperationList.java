@@ -9,12 +9,12 @@ public class OperationList {
 
     private byte[] code;
 
-    private static ThreadLocal<Integer> codePosition = new ThreadLocal<>();
+    private static Integer codePosition;
 
 
     public OperationList(byte[] code) {
         this.code = code;
-        codePosition.set(0);
+        codePosition = 0;
     }
 
     @FieldOrder(index = 1)
@@ -38,10 +38,10 @@ public class OperationList {
     }
 
     public static int getCodePosition() {
-        return codePosition.get();
+        return codePosition;
     }
 
     public static void setCodePosition(int codePosition) {
-        OperationList.codePosition.set(codePosition);
+        OperationList.codePosition = codePosition;
     }
 }

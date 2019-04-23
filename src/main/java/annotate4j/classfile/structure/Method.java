@@ -1,17 +1,18 @@
 package annotate4j.classfile.structure;
 
 import annotate4j.classfile.structure.attribute.Attribute;
+import annotate4j.classfile.structure.attribute.ExceptionsAttribute;
 import annotate4j.classfile.structure.constantpool.ConstantPool;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.classfile.structure.types.Type;
 import annotate4j.classfile.structure.types.TypeList;
+import annotate4j.classfile.utils.ConstantPoolUtils;
 import annotate4j.core.Loader;
 import annotate4j.core.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.ContainerSize;
 import annotate4j.core.bin.annotation.Inject;
 import annotate4j.core.bin.exceptions.FieldReadException;
 import annotate4j.core.bin.loader.InputStreamLoader;
-
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
@@ -119,6 +120,9 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
                 builder.append(e.getValue()).append(" ");
             }
         }
+        if (builder.length() > 0) {
+            builder.setLength(builder.length() - 1);
+        }
         return builder.toString();
     }
 
@@ -158,7 +162,7 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
         this.thisClassIndex = thisClassIndex;
     }
 
-    private String getReturnValue(){
+    public String getReturnValue() {
         String description = getDescription();
 
         int index = description.lastIndexOf(')');
@@ -174,7 +178,7 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
         return  Field.getType(description);
     }
 
-    private String getMethodParams() {
+    public String getMethodParams() {
         String description = getDescription();
         int from = description.lastIndexOf('(');
         int to = description.lastIndexOf(')');
@@ -194,10 +198,25 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
         if (params.length() > 2){
             params.setLength(params.length() - 2);
         }
+        String throwsClause = "";
+        for (Attribute attribute : getAttributeList()) {
+            if (attribute instanceof ExceptionsAttribute) {
+                ExceptionsAttribute eAttribute = (ExceptionsAttribute) attribute;
+                StringBuilder builder = new StringBuilder();
+                for (short idx : eAttribute.getExceptionIndexTable()) {
+                    builder.append(ConstantPoolUtils.getStringByIndex(idx, constantPoolList));
+                    builder.append(", ");
+                }
+                if (builder.length() > 0) {
+                    builder.setLength(builder.length() - 2);
+                }
+                throwsClause = " throws " + builder.toString();
+            }
+        }
 
         return getMethodAccessProperties() + " " + getReturnValue() +
                 " " + getMethodName() + " "
-                 + "(" + params.toString() + ")";
+                + "(" + params.toString() + ")" + throwsClause;
 
     }
 }
