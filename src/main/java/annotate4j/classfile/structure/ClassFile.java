@@ -1,7 +1,7 @@
 package annotate4j.classfile.structure;
 
 import annotate4j.classfile.structure.attribute.Attribute;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.core.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.ContainerSize;
 import annotate4j.core.bin.annotation.Inject;
@@ -29,7 +29,7 @@ public class ClassFile implements HasAttributeList {
     @FieldOrder(index = 5)
     @ContainerSize(fieldName = "constantPoolCount", corrector = -1)
     @Inject(fieldName = "constantPoolList")
-    private List<ConstantPool> constantPoolList = new ArrayList<>();
+    private List<ConstantPoolItem> constantPoolList = new ArrayList<>();
 
     @FieldOrder(index = 6)
     private Short accessFlag;
@@ -104,11 +104,11 @@ public class ClassFile implements HasAttributeList {
         this.constantPoolCount = constantPoolCount;
     }
 
-    public List<ConstantPool> getConstantPoolList() {
+    public List<ConstantPoolItem> getConstantPoolList() {
         return constantPoolList;
     }
 
-    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+    public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 

@@ -5,7 +5,7 @@ import annotate4j.core.annotation.FieldOrder;
 /**
  * @author Eugene Savin
  */
-public class CommonRefInfo extends ConstantPool {
+public class CommonRefInfo extends ConstantPoolItem {
 
     @FieldOrder(index = 2)
     private short classIndex;

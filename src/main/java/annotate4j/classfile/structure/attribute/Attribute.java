@@ -1,6 +1,6 @@
 package annotate4j.classfile.structure.attribute;
 
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.core.HasInheritor;
 import annotate4j.core.annotation.FieldOrder;
@@ -63,14 +63,14 @@ public class Attribute implements HasInheritor<Attribute> {
         this.attributeNameIndex = attributeNameIndex;
     }
 
-    protected List<ConstantPool> constantPoolList;
+    protected List<ConstantPoolItem> constantPoolList;
 
 
 
     @Override
     public Class<? extends Attribute> getInheritor() throws InheritorNotFoundException {
 
-        ConstantPool cp = constantPoolList.get(attributeNameIndex - 1);
+        ConstantPoolItem cp = constantPoolList.get(attributeNameIndex - 1);
         if (!(cp instanceof Utf8Info)) {
             throw new InheritorNotFoundException("Provided incorrect index in constantPool: " + attributeNameIndex + " class: " + cp.getClass().getName() +
                     ", the class should be instance of Utf8Info\n" +
@@ -88,7 +88,7 @@ public class Attribute implements HasInheritor<Attribute> {
 
 
     @PostConstruct
-    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+    public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 

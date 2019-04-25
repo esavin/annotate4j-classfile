@@ -2,7 +2,7 @@ package annotate4j.classfile.structure;
 
 import annotate4j.classfile.structure.attribute.Attribute;
 import annotate4j.classfile.structure.attribute.ExceptionsAttribute;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.classfile.structure.types.Type;
 import annotate4j.classfile.structure.types.TypeList;
@@ -60,7 +60,7 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
     @Inject(fieldName = "constantPoolList")
     private List<Attribute> attributeList;
 
-    protected List<ConstantPool> constantPoolList;
+    protected List<ConstantPoolItem> constantPoolList;
 
     public short getAccessFlags() {
         return accessFlags;
@@ -146,11 +146,11 @@ public class Method implements HasDescriptorIndex, HasAttributeList {
         return name.getBytesStr();
     }
 
-    public List<ConstantPool> getConstantPoolList() {
+    public List<ConstantPoolItem> getConstantPoolList() {
         return constantPoolList;
     }
 
-    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+    public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 

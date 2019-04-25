@@ -2,7 +2,7 @@ package annotate4j.classfile.worker;
 
 import annotate4j.classfile.structure.ClassFile;
 import annotate4j.classfile.structure.constantpool.ClassInfo;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.core.worker.IdentityMapWorker;
 
@@ -18,8 +18,8 @@ public abstract class ClassIndexWorker implements IdentityMapWorker<ClassFile> {
     public IdentityHashMap<Object, String> doWork(ClassFile classFile) {
         Short sh = getClassIndex(classFile);
         IdentityHashMap<Object, String> m = new IdentityHashMap<Object, String>();
-        List<ConstantPool> cp = classFile.getConstantPoolList();
-        ConstantPool cpElement = cp.get(sh - 1);
+        List<ConstantPoolItem> cp = classFile.getConstantPoolList();
+        ConstantPoolItem cpElement = cp.get(sh - 1);
         if (cpElement instanceof ClassInfo){
             ClassInfo cInfo = (ClassInfo) cpElement;
             short nameIndex = cInfo.getNameIndex();

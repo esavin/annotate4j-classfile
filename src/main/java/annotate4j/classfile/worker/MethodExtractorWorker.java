@@ -6,7 +6,7 @@ import annotate4j.classfile.structure.attribute.Attribute;
 import annotate4j.classfile.structure.attribute.CodeAttribute;
 import annotate4j.classfile.structure.attribute.SourceFileAttribute;
 import annotate4j.classfile.structure.constantpool.ClassInfo;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.core.worker.Worker;
 
@@ -17,12 +17,12 @@ import java.util.List;
  * @author Eugene Savin
  */
 public class MethodExtractorWorker implements Worker<ClassFile, ClassFile> {
-    private List<ConstantPool> ncp = new ArrayList<ConstantPool>();
+    private List<ConstantPoolItem> ncp = new ArrayList<ConstantPoolItem>();
     private ClassFile nc = new ClassFile();
 
     @Override
     public ClassFile doWork(ClassFile c) {
-        List<ConstantPool> cp = c.getConstantPoolList();
+        List<ConstantPoolItem> cp = c.getConstantPoolList();
 
 
         nc.setMagic(c.getMagic());
@@ -59,7 +59,7 @@ public class MethodExtractorWorker implements Worker<ClassFile, ClassFile> {
         return nc;
     }
 
-    private Method extractMethod(List<ConstantPool> cp, ClassFile c, int index) {
+    private Method extractMethod(List<ConstantPoolItem> cp, ClassFile c, int index) {
         Method m = c.getMethodList().get(index);
         Method nm = new Method();
         nm.setAccessFlags(m.getAccessFlags());
@@ -79,13 +79,13 @@ public class MethodExtractorWorker implements Worker<ClassFile, ClassFile> {
         return nm;
     }
 
-    private int copyUtf8Info(List<ConstantPool> cp, short index) {
+    private int copyUtf8Info(List<ConstantPoolItem> cp, short index) {
         Utf8Info u = (Utf8Info) cp.get(index - 1);
         ncp.add(u);
         return ncp.size();
     }
 
-    private void copyClassInfo(List<ConstantPool> cp, short index) {
+    private void copyClassInfo(List<ConstantPoolItem> cp, short index) {
         ClassInfo ci = new ClassInfo();
         ci.setTag((byte) 7);
         ncp.add(ci);

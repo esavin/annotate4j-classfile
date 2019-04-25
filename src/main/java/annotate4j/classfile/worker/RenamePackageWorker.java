@@ -26,8 +26,8 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
         short thisClassNameIndex = classFile.getThisClassIndex();
         ClassInfo classInfo = (ClassInfo) classFile.getConstantPoolList().get(thisClassNameIndex - 1);
         String thisClassname = ((Utf8Info) classFile.getConstantPoolList().get(classInfo.getNameIndex() - 1)).getBytesStr();
-        List<ConstantPool> constantPoolList = classFile.getConstantPoolList();
-        for (ConstantPool cp : constantPoolList) {
+        List<ConstantPoolItem> constantPoolList = classFile.getConstantPoolList();
+        for (ConstantPoolItem cp : constantPoolList) {
             if (cp instanceof ClassInfo) {
                 replaceInClassInfo(constantPoolList, (ClassInfo) cp);
             }
@@ -67,7 +67,7 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
                     for (Operation operation: code.getOperationList().getOperations()){
                         if (operation instanceof LdcOperation ){
                             LdcOperation ldc = (LdcOperation) operation;
-                            ConstantPool cp = constantPoolList.get(ldc.getIndex()-1);
+                            ConstantPoolItem cp = constantPoolList.get(ldc.getIndex()-1);
                             if (cp instanceof StringInfo){
                                 replaceByIndex(constantPoolList, ((StringInfo)cp).getStringIndex());
                             }
@@ -89,7 +89,7 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
         return classFile;
     }
 
-    private void replaceInAttributes(List<ConstantPool> constantPoolList, Attribute attribute ) {
+    private void replaceInAttributes(List<ConstantPoolItem> constantPoolList, Attribute attribute) {
 
         if (attribute instanceof RuntimeVisibleAnnotationsAttribute) {
             RuntimeVisibleAnnotationsAttribute runtimeVisibleAnnotationsAttribute = (RuntimeVisibleAnnotationsAttribute) attribute;
@@ -112,17 +112,17 @@ public class RenamePackageWorker implements Worker<ClassFile, ClassFile> {
 
     }
 
-    private void replaceInMethodsAndFields(List<ConstantPool> constantPoolList, CommonRefInfo cri) {
+    private void replaceInMethodsAndFields(List<ConstantPoolItem> constantPoolList, CommonRefInfo cri) {
         short nameAndTypeIndex = cri.getNameAndTypeIndex();
         NameAndTypeInfo nameAndTypeInfo = (NameAndTypeInfo) constantPoolList.get(nameAndTypeIndex - 1);
         replaceByIndex(constantPoolList, nameAndTypeInfo.getDescriptorIndex());
     }
 
-    private void replaceInClassInfo(List<ConstantPool> constantPoolList, ClassInfo ci) {
+    private void replaceInClassInfo(List<ConstantPoolItem> constantPoolList, ClassInfo ci) {
         replaceByIndex(constantPoolList, ci.getNameIndex());
     }
 
-    private void replaceByIndex(List<ConstantPool> constantPoolList, int index){
+    private void replaceByIndex(List<ConstantPoolItem> constantPoolList, int index) {
         Utf8Info utf8Info = (Utf8Info) constantPoolList.get(index - 1);
         replaceInUtf8Info(utf8Info);
     }

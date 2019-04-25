@@ -5,7 +5,7 @@ import annotate4j.core.annotation.FieldOrder;
 /**
  * @author Eugene Savin
  */
-public class StringInfo extends ConstantPool {
+public class StringInfo extends ConstantPoolItem {
 
     @FieldOrder(index = 2)
     private short stringIndex;

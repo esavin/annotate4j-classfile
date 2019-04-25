@@ -5,7 +5,7 @@ import annotate4j.core.annotation.FieldOrder;
 /**
  * @author Eugene Savin
  */
-public class FourByteNumberInfo extends ConstantPool {
+public class FourByteNumberInfo extends ConstantPoolItem {
 
     @FieldOrder(index = 2)
     private int bytes;

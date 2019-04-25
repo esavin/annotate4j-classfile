@@ -14,7 +14,7 @@ public class ConstantPoolContainer {
 
     @FieldOrder(index = 2)
     @ContainerSize(fieldName = "constantPoolCount", corrector = -1)
-    private List<ConstantPool> constantPoolList;
+    private List<ConstantPoolItem> constantPoolList;
 
     public short getConstantPoolCount() {
         return constantPoolCount;
@@ -24,11 +24,11 @@ public class ConstantPoolContainer {
         this.constantPoolCount = constantPoolCount;
     }
 
-    public List<ConstantPool> getConstantPoolList() {
+    public List<ConstantPoolItem> getConstantPoolList() {
         return constantPoolList;
     }
 
-    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+    public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 }

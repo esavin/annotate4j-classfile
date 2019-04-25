@@ -6,7 +6,7 @@ import annotate4j.core.bin.annotation.ContainerSize;
 /**
  * @author Eugene Savin
  */
-public class Utf8Info extends ConstantPool {
+public class Utf8Info extends ConstantPoolItem {
 
     @FieldOrder(index = 2)
     private short length;

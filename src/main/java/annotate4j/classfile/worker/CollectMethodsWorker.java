@@ -31,8 +31,8 @@ public class CollectMethodsWorker implements Worker<ClassFile, ClassFile> {
         short thisClassNameIndex = classFile.getThisClassIndex();
         ClassInfo classInfo = (ClassInfo) classFile.getConstantPoolList().get(thisClassNameIndex - 1);
         String thisClassName = ((Utf8Info) classFile.getConstantPoolList().get(classInfo.getNameIndex() - 1)).getBytesStr();
-        List<ConstantPool> constantPoolList = classFile.getConstantPoolList();
-        for (ConstantPool cp : constantPoolList) {
+        List<ConstantPoolItem> constantPoolList = classFile.getConstantPoolList();
+        for (ConstantPoolItem cp : constantPoolList) {
             if (cp instanceof ClassInfo) {
                 String className = ConstantPoolUtils.getStringByIndex(((ClassInfo) cp).getNameIndex(), constantPoolList);
                 if (className.startsWith(packagePrefix)) {

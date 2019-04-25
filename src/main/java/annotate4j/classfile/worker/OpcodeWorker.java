@@ -6,7 +6,7 @@ import annotate4j.classfile.structure.Method;
 import annotate4j.classfile.structure.attribute.Attribute;
 import annotate4j.classfile.structure.attribute.CodeAttribute;
 import annotate4j.classfile.structure.attribute.LineNumberTableAttribute;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.operation.Operation;
 import annotate4j.core.Loader;
 import annotate4j.core.bin.exceptions.FieldReadException;
@@ -24,7 +24,7 @@ public class OpcodeWorker implements IdentityMapWorker<ClassFile> {
     @Override
     public IdentityHashMap<Object, String> doWork(ClassFile classFile) {
         IdentityHashMap<Object, String> m = new IdentityHashMap<Object, String>();
-        List<ConstantPool> cp = classFile.getConstantPoolList();
+        List<ConstantPoolItem> cp = classFile.getConstantPoolList();
         List<Method> methods = classFile.getMethodList();
         for (Method method : methods) {
             List<Attribute> aList = method.getAttributeList();

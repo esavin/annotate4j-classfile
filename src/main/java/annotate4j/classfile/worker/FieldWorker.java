@@ -1,15 +1,16 @@
 package annotate4j.classfile.worker;
 
-import annotate4j.classfile.utils.TypeDecoder;
 import annotate4j.classfile.structure.ClassFile;
 import annotate4j.classfile.structure.Field;
 import annotate4j.classfile.structure.attribute.Attribute;
 import annotate4j.classfile.structure.attribute.SignatureAttribute;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
+import annotate4j.classfile.utils.TypeDecoder;
 import annotate4j.core.worker.IdentityMapWorker;
 
-import java.util.*;
+import java.util.IdentityHashMap;
+import java.util.List;
 
 /**
  * @author Eugene Savin
@@ -20,7 +21,7 @@ public class FieldWorker implements IdentityMapWorker<ClassFile> {
     @Override
     public IdentityHashMap<Object, String> doWork(ClassFile classFile) {
         IdentityHashMap<Object, String> m = new IdentityHashMap<Object, String>();
-        List<ConstantPool> cp = classFile.getConstantPoolList();
+        List<ConstantPoolItem> cp = classFile.getConstantPoolList();
         List<Field> fields = classFile.getFieldList();
         for (Field f : fields) {
             String accessFlag = decodeAccessFlags(f.getAccessFlags());
@@ -42,8 +43,8 @@ public class FieldWorker implements IdentityMapWorker<ClassFile> {
         return m;
     }
 
-    private String getFieldType(List<ConstantPool> cp, short index) {
-        ConstantPool elem = cp.get(index - 1);
+    private String getFieldType(List<ConstantPoolItem> cp, short index) {
+        ConstantPoolItem elem = cp.get(index - 1);
         if (elem instanceof Utf8Info) {
             Utf8Info u = (Utf8Info) elem;
             String type = u.getBytesStr();
@@ -55,8 +56,8 @@ public class FieldWorker implements IdentityMapWorker<ClassFile> {
     }
 
 
-    private String getFieldName(List<ConstantPool> cp, short index) {
-        ConstantPool elem = cp.get(index - 1);
+    private String getFieldName(List<ConstantPoolItem> cp, short index) {
+        ConstantPoolItem elem = cp.get(index - 1);
         if (elem instanceof Utf8Info) {
             Utf8Info u = (Utf8Info) elem;
             return u.getBytesStr();

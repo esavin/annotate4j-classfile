@@ -1,19 +1,19 @@
 package annotate4j.classfile.utils;
 
 import annotate4j.classfile.structure.constantpool.ClassInfo;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 
 import java.util.List;
 
 public class ConstantPoolUtils {
 
-    public static String getClassNameByIndex(int index, List<ConstantPool> constantPoolList) {
+    public static String getClassNameByIndex(int index, List<ConstantPoolItem> constantPoolList) {
         return getStringByIndex(index, constantPoolList).replaceAll("/", ".");
     }
 
-    public static String getStringByIndex(int index, List<ConstantPool> constantPoolList) {
-        ConstantPool item = constantPoolList.get(index - 1);
+    public static String getStringByIndex(int index, List<ConstantPoolItem> constantPoolList) {
+        ConstantPoolItem item = constantPoolList.get(index - 1);
         if (item instanceof Utf8Info) {
             Utf8Info utf8Info = (Utf8Info) item;
             return utf8Info.getBytesStr();

@@ -1,7 +1,5 @@
 package annotate4j.classfile.worker;
 
-import annotate4j.classfile.utils.TypeDecoder;
-import annotate4j.classfile.utils.TypeListIterator;
 import annotate4j.classfile.structure.ClassFile;
 import annotate4j.classfile.structure.LocalVariableTable;
 import annotate4j.classfile.structure.Method;
@@ -10,10 +8,11 @@ import annotate4j.classfile.structure.attribute.CodeAttribute;
 import annotate4j.classfile.structure.attribute.LocalVariableTableAttribute;
 import annotate4j.classfile.structure.attribute.SignatureAttribute;
 import annotate4j.classfile.structure.constantpool.ClassInfo;
-import annotate4j.classfile.structure.constantpool.ConstantPool;
+import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
+import annotate4j.classfile.utils.TypeDecoder;
+import annotate4j.classfile.utils.TypeListIterator;
 import annotate4j.core.worker.IdentityMapWorker;
-
 
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -28,7 +27,7 @@ public class MethodWorker implements IdentityMapWorker<ClassFile> {
     @Override
     public IdentityHashMap<Object, String> doWork(ClassFile classFile) {
         IdentityHashMap<Object, String> m = new IdentityHashMap<Object, String>();
-        List<ConstantPool> cp = classFile.getConstantPoolList();
+        List<ConstantPoolItem> cp = classFile.getConstantPoolList();
         List<Method> methods = classFile.getMethodList();
         for (Method method : methods) {
             String accessFlag = decodeAccessFlags(method.getAccessFlags());
@@ -66,8 +65,8 @@ public class MethodWorker implements IdentityMapWorker<ClassFile> {
         return m;
     }
 
-    private String getMethodParams(List<ConstantPool> cp, short index, Method method) {
-        ConstantPool elem = cp.get(index - 1);
+    private String getMethodParams(List<ConstantPoolItem> cp, short index, Method method) {
+        ConstantPoolItem elem = cp.get(index - 1);
         if (elem instanceof Utf8Info) {
             Utf8Info u = (Utf8Info) elem;
             String type = u.getBytesStr();
@@ -115,8 +114,8 @@ public class MethodWorker implements IdentityMapWorker<ClassFile> {
         return "";
     }
 
-    private String getMethodType(List<ConstantPool> cp, short index) {
-        ConstantPool elem = cp.get(index - 1);
+    private String getMethodType(List<ConstantPoolItem> cp, short index) {
+        ConstantPoolItem elem = cp.get(index - 1);
         if (elem instanceof Utf8Info) {
             Utf8Info u = (Utf8Info) elem;
             String type = u.getBytesStr();
@@ -128,8 +127,8 @@ public class MethodWorker implements IdentityMapWorker<ClassFile> {
         return "";
     }
 
-    private String getMethodName(List<ConstantPool> cp, short index) {
-        ConstantPool elem = cp.get(index - 1);
+    private String getMethodName(List<ConstantPoolItem> cp, short index) {
+        ConstantPoolItem elem = cp.get(index - 1);
         if (elem instanceof Utf8Info) {
             Utf8Info u = (Utf8Info) elem;
             return u.getBytesStr();

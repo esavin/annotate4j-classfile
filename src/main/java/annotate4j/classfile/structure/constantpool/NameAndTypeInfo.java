@@ -6,7 +6,7 @@ import annotate4j.core.annotation.FieldOrder;
 /**
  * @author Eugene Savin
  */
-public class NameAndTypeInfo extends ConstantPool implements HasDescriptorIndex {
+public class NameAndTypeInfo extends ConstantPoolItem implements HasDescriptorIndex {
 
     @FieldOrder(index = 2)
     private short nameIndex;

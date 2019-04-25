@@ -227,14 +227,14 @@ public class Operation implements HasInheritor<Operation> {
         m.put((byte) 255, Impdep2Operation.class);
     }
 
-    private List<ConstantPool> constantPoolList;
+    private List<ConstantPoolItem> constantPoolList;
 
     private Stack<Object> stack;
 
     public Operation() {
     }
 
-    public Operation(List<ConstantPool> cp, Stack<Object> stack) {
+    public Operation(List<ConstantPoolItem> cp, Stack<Object> stack) {
         this.constantPoolList = cp;
         this.stack = stack;
     }
@@ -254,11 +254,11 @@ public class Operation implements HasInheritor<Operation> {
         return "";
     }
 
-    public List<ConstantPool> getConstantPoolList() {
+    public List<ConstantPoolItem> getConstantPoolList() {
         return constantPoolList;
     }
 
-    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+    public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 
@@ -284,7 +284,7 @@ public class Operation implements HasInheritor<Operation> {
         return m.values();
     }
 
-    public ConstantPool getConstantPoolEntry(short index) {
+    public ConstantPoolItem getConstantPoolEntry(short index) {
         return getConstantPoolList().get(index - 1);
     }
 

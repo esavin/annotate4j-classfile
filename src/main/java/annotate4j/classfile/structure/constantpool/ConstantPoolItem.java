@@ -14,10 +14,10 @@ import java.util.Map;
  */
 
 
-public class ConstantPool implements HasInheritor<ConstantPool> {
-    private final static Map<Byte, Class<? extends ConstantPool>> m = new HashMap<Byte, Class<? extends ConstantPool>>();
+public class ConstantPoolItem implements HasInheritor<ConstantPoolItem> {
+    private final static Map<Byte, Class<? extends ConstantPoolItem>> m = new HashMap<>();
 
-    private List<ConstantPool> constantPoolList;
+    private List<ConstantPoolItem> constantPoolList;
 
     static {
         m.put((byte) 7, ClassInfo.class);
@@ -37,8 +37,8 @@ public class ConstantPool implements HasInheritor<ConstantPool> {
     private byte tag;
 
     @Override
-    public Class<? extends ConstantPool> getInheritor() throws InheritorNotFoundException {
-        Class<? extends ConstantPool> clazz = m.get(tag);
+    public Class<? extends ConstantPoolItem> getInheritor() throws InheritorNotFoundException {
+        Class<? extends ConstantPoolItem> clazz = m.get(tag);
         if (clazz == null) {
             throw new InheritorNotFoundException(this.getClass().getName(), String.valueOf(tag));
         }
@@ -54,15 +54,15 @@ public class ConstantPool implements HasInheritor<ConstantPool> {
     }
 
     @Override
-    public Collection<Class<? extends ConstantPool>> getInheritors() {
+    public Collection<Class<? extends ConstantPoolItem>> getInheritors() {
         return m.values();
     }
 
-    public void setConstantPoolList(List<ConstantPool> constantPoolList) {
+    public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }
 
-    public List<ConstantPool> getConstantPoolList() {
+    public List<ConstantPoolItem> getConstantPoolList() {
         return constantPoolList;
     }
 }
