@@ -31,6 +31,12 @@ public class ConstantPoolItem implements HasInheritor<ConstantPoolItem> {
         m.put((byte) 6, DoubleInfo.class);
         m.put((byte) 12, NameAndTypeInfo.class);
         m.put((byte) 1, Utf8Info.class);
+        m.put((byte) 15, MethodHandleInfo.class);
+        m.put((byte) 16, MethodTypeInfo.class);
+        m.put((byte) 17, DynamicInfo.class);
+        m.put((byte) 18, InvokeDynamicInfo.class);
+        m.put((byte) 19, ModuleInfo.class);
+        m.put((byte) 20, PackageInfo.class);
     }
 
     @FieldOrder(index = 1)
