@@ -1,12 +1,12 @@
 package annotate4j.classfile.structure.types;
 
 import annotate4j.core.bin.annotation.FieldOrder;
-import annotate4j.core.bin.annotation.Terminator;
+import annotate4j.core.bin.annotation.StringTerminator;
 
 public class ClassType extends Type {
 
     @FieldOrder(index = 2)
-    @Terminator((byte) ';')
+    @StringTerminator((byte) ';')
     private String className;
 
     @Override
