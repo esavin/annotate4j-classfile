@@ -1,8 +1,8 @@
 package annotate4j.classfile.handler;
 
 import annotate4j.classfile.loader.EntrySizeSupportLoader;
-import annotate4j.classfile.worker.PrintMethodSignatureWorker;
 import annotate4j.classfile.structure.ClassFile;
+import annotate4j.classfile.worker.PrintMethodSignatureWorker;
 import annotate4j.core.DumpBuilder;
 import annotate4j.core.Loader;
 import annotate4j.core.bin.dump.OutputStreamBuilder;
@@ -23,17 +23,11 @@ public class ClassHandler {
 
         FileOutputStream fos = null;
 
-        InputStream is = null;
-        ClassFile classFile = null;
-        try {
-            is = new FileInputStream(inputFileName);
+        ClassFile classFile;
+        try (InputStream is = new FileInputStream(inputFileName)) {
             Loader loader = new EntrySizeSupportLoader(is);
 
             classFile = (ClassFile) loader.load();
-        } finally {
-            if (is != null) {
-                is.close();
-            }
         }
 
         Worker worker = 
