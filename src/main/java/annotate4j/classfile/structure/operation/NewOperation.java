@@ -1,6 +1,6 @@
 package annotate4j.classfile.structure.operation;
 
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 
 /**
  * The unsigned indexbyte1 and indexbyte2 are used to construct an

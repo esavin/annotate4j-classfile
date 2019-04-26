@@ -1,6 +1,6 @@
 package annotate4j.classfile.structure.constantpool;
 
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 
 /**
  * The CONSTANT_Package_info structure is used to represent a package exported or

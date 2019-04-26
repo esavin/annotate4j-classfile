@@ -1,7 +1,7 @@
 package annotate4j.classfile.structure.attribute;
 
 import annotate4j.classfile.structure.annotation.ElementValue;
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 
 /**
  * @author Eugene Savin

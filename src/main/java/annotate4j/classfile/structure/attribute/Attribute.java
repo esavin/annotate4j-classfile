@@ -3,7 +3,7 @@ package annotate4j.classfile.structure.attribute;
 import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
 import annotate4j.core.HasInheritor;
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 import annotate4j.core.exceptions.InheritorNotFoundException;
 
 import javax.annotation.PostConstruct;

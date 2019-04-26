@@ -1,7 +1,7 @@
 package annotate4j.classfile.structure.annotation;
 
-import annotate4j.core.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.ContainerSize;
+import annotate4j.core.bin.annotation.FieldOrder;
 
 import java.util.List;
 

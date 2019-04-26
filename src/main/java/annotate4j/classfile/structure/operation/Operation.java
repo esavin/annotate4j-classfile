@@ -2,7 +2,7 @@ package annotate4j.classfile.structure.operation;
 
 import annotate4j.classfile.structure.constantpool.*;
 import annotate4j.core.HasInheritor;
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 import annotate4j.core.exceptions.InheritorNotFoundException;
 
 import java.util.*;

@@ -1,6 +1,6 @@
 package annotate4j.classfile.structure.operation;
 
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.Inject;
 
 import java.util.List;

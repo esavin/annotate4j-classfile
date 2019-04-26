@@ -2,7 +2,7 @@ package annotate4j.classfile.structure;
 
 import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
 import annotate4j.classfile.structure.constantpool.Utf8Info;
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 
 import java.util.List;
 

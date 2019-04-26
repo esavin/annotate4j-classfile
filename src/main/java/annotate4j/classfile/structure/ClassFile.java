@@ -2,8 +2,8 @@ package annotate4j.classfile.structure;
 
 import annotate4j.classfile.structure.attribute.Attribute;
 import annotate4j.classfile.structure.constantpool.ConstantPoolItem;
-import annotate4j.core.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.ContainerSize;
+import annotate4j.core.bin.annotation.FieldOrder;
 import annotate4j.core.bin.annotation.Inject;
 
 import java.util.ArrayList;

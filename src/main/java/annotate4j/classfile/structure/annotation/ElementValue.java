@@ -1,7 +1,7 @@
 package annotate4j.classfile.structure.annotation;
 
 import annotate4j.core.HasInheritor;
-import annotate4j.core.annotation.FieldOrder;
+import annotate4j.core.bin.annotation.FieldOrder;
 import annotate4j.core.exceptions.InheritorNotFoundException;
 
 import java.util.Collection;
