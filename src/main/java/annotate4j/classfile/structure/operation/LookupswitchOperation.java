@@ -1,5 +1,8 @@
 package annotate4j.classfile.structure.operation;
 
+import annotate4j.core.bin.annotation.ContainerSize;
+import annotate4j.core.bin.annotation.FieldOrder;
+
 /**
  * @author Eugene Savin
  * @version Aug 26, 2010
@@ -7,10 +10,66 @@ package annotate4j.classfile.structure.operation;
 public class LookupswitchOperation extends Operation {
 
 
+    @FieldOrder(index = 1)
+    @ContainerSize(fieldName = "padding")
+    private byte[] paddingBytes;
+
+    @FieldOrder(index = 2)
+    private int defaultValue;
+
+    @FieldOrder(index = 3)
+    private int npairsCount;
+
+    @FieldOrder(index = 5)
+    @ContainerSize(fieldName = "matchOffsetsCount")
+    private int[] matchOffsets;
 
     public LookupswitchOperation() {
-        // TODO increment opcode counter
-        throw new RuntimeException("Not implemented");
+        OperationList.setCodePosition(OperationList.getCodePosition() + 1);
+    }
+
+    public byte[] getPaddingBytes() {
+        return paddingBytes;
+    }
+
+    public void setPaddingBytes(byte[] paddingBytes) {
+        OperationList.setCodePosition(OperationList.getCodePosition() + getPadding());
+
+        this.paddingBytes = paddingBytes;
+    }
+
+    public int getPadding() {
+        return 4 - OperationList.getCodePosition() % 4;
+    }
+
+
+    public int getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(int defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public int getNpairsCount() {
+        return npairsCount;
+    }
+
+    public void setNpairsCount(int npairsCount) {
+        this.npairsCount = npairsCount;
+    }
+
+    public int[] getMatchOffsets() {
+        return matchOffsets;
+    }
+
+    public void setMatchOffsets(int[] matchOffsets) {
+        OperationList.setCodePosition(OperationList.getCodePosition() + matchOffsets.length * 4);
+        this.matchOffsets = matchOffsets;
+    }
+
+    public int getMatchOffsetsCount() {
+        return npairsCount * 2;
     }
 
     public String getMnemonic() {
