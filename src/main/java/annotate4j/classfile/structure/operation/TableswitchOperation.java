@@ -10,21 +10,21 @@ import annotate4j.core.bin.annotation.FieldOrder;
 public class TableswitchOperation extends Operation {
 
 
-    @FieldOrder(index = 1)
+    @FieldOrder(index = 2)
     @ContainerSize(fieldName = "padding")
     private byte[] paddingBytes;
 
-    @FieldOrder(index = 2)
+    @FieldOrder(index = 3)
     private int defaultValue;
 
-    @FieldOrder(index = 3)
+    @FieldOrder(index = 4)
     private int lowValue;
 
-    @FieldOrder(index = 4)
+    @FieldOrder(index = 5)
     private int highValue;
 
 
-    @FieldOrder(index = 5)
+    @FieldOrder(index = 6)
     @ContainerSize(fieldName = "jumpOffsetsCount")
     private int[] jumpOffsets;
 

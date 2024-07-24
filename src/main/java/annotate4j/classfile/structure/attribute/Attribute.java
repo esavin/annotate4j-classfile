@@ -6,7 +6,6 @@ import annotate4j.core.HasInheritor;
 import annotate4j.core.bin.annotation.FieldOrder;
 import annotate4j.core.exceptions.InheritorNotFoundException;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +37,18 @@ public class Attribute implements HasInheritor<Attribute> {
         m.put("RuntimeInvisibleAnnotations", RuntimeInvisibleAnnotationsAttribute.class);
         m.put("RuntimeVisibleParameterAnnotations", RuntimeVisibleParameterAnnotationsAttribute.class);
         m.put("RuntimeInvisibleParameterAnnotations", RuntimeInvisibleParameterAnnotationsAttribute.class);
+        m.put("RuntimeVisibleTypeAnnotations", RuntimeVisibleTypeAnnotationsAttribute.class);
+        m.put("RuntimeInvisibleTypeAnnotations", RuntimeInvisibleTypeAnnotationsAttribute.class);
         m.put("AnnotationDefault", AnnotationDefaultAttribute.class);
+        m.put("BootstrapMethods", BootstrapMethodsAttribute.class);
+        m.put("MethodParameters", MethodParametersAttribute.class);
+        m.put("Module", ModuleAttribute.class);
+        m.put("ModulePackages", ModulePackagesAttribute.class);
+        m.put("ModuleMainClass", ModuleMainClassAttribute.class);
+        m.put("NestHost", NestHostAttribute.class);
+        m.put("NestMembers", NestMembersAttribute.class);
+        m.put("Record", RecordAttribute.class);
+        m.put("PermittedSubclasses", PermittedSubclassesAttribute.class);
     }
 
     @FieldOrder(index = 1)
@@ -86,8 +96,6 @@ public class Attribute implements HasInheritor<Attribute> {
         return c;
     }
 
-
-    @PostConstruct
     public void setConstantPoolList(List<ConstantPoolItem> constantPoolList) {
         this.constantPoolList = constantPoolList;
     }

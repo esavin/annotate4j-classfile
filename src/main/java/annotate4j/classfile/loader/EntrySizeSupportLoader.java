@@ -22,9 +22,7 @@ public class EntrySizeSupportLoader extends InputStreamLoader {
         super(in, new ClassFile());
     }
 
-    protected boolean readList(Field f) throws
-            IllegalAccessException, InvocationTargetException,
-            FieldReadException {
+    protected boolean readList(Field f) throws FieldReadException {
 
         Type t = f.getGenericType();
 
@@ -34,11 +32,15 @@ public class EntrySizeSupportLoader extends InputStreamLoader {
         try {
             Method getter = ReflectionHelper.getGetter(instance.getClass(), f.getName());
             Object obj = getter.invoke(instance);
-            if (obj instanceof List){
+            if (obj instanceof List) {
                 list = (List) obj;
             }
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            throw new FieldReadException("Can not find getter for " + instance.getClass().getName() +
+                    " class, field " + f.getName());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new FieldReadException("Can not call getter for " + instance.getClass().getName() +
+                    " class, field " + f.getName());
         }
         if (list == null) {
             list = new ArrayList();
@@ -75,16 +77,17 @@ public class EntrySizeSupportLoader extends InputStreamLoader {
             Method m = ReflectionHelper.getSetter(instance.getClass(), f.getName(), List.class);
             m.invoke(instance, list);
         } catch (NoSuchMethodException e) {
-            throw new FieldReadException("Can not receive setter for " + instance.getClass().getName() +
+            throw new FieldReadException("Can not find setter for " + instance.getClass().getName() +
+                    " class, field " + f.getName());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new FieldReadException("Can not call setter for " + instance.getClass().getName() +
                     " class, field " + f.getName());
         }
         return true;
 
     }
 
-    private void decreaseContainerSize(Field f, int dec) throws
-            IllegalAccessException, InvocationTargetException,
-            FieldReadException {
+    private void decreaseContainerSize(Field f, int dec) throws FieldReadException {
 
         ContainerSize cs;
         try {
@@ -106,17 +109,22 @@ public class EntrySizeSupportLoader extends InputStreamLoader {
             } catch (NoSuchMethodException e) {
                 throw new WrongContainerSizeFieldException(f.getName(), counterFieldName);
             }
-            Object o = getter.invoke(instance);
-            if (o instanceof Number) {
-                Number n = (Number) o;
-                long l = n.longValue() + corrector;
+            try {
+                Object o = getter.invoke(instance);
+                if (o instanceof Number) {
+                    Number n = (Number) o;
+                    long l = n.longValue() + corrector;
 
-                if (l < 0 && l > -256) {
-                    size = (byte) l;
-                } else {
-                    size = n.longValue() + corrector;
+                    if (l < 0 && l > -256) {
+                        size = (byte) l;
+                    } else {
+                        size = n.longValue() + corrector;
+                    }
+
                 }
-
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new FieldReadException("Can not call getter for " + instance.getClass().getName() +
+                        " class, field " + counterFieldName);
             }
         }
         Method setter;
@@ -126,7 +134,12 @@ public class EntrySizeSupportLoader extends InputStreamLoader {
             throw new WrongContainerSizeFieldException(f.getName(), cs.fieldName());
         }
 
-        setter.invoke(instance, (short) (size - dec));
+        try {
+            setter.invoke(instance, (short) (size - dec));
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new FieldReadException("Can not call setter for " + instance.getClass().getName() +
+                    " class, field " + cs.fieldName());
+        }
     }
 
 }

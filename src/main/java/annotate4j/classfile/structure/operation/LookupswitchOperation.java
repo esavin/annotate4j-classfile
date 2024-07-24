@@ -10,14 +10,13 @@ import annotate4j.core.bin.annotation.FieldOrder;
 public class LookupswitchOperation extends Operation {
 
 
-    @FieldOrder(index = 1)
-    @ContainerSize(fieldName = "padding")
-    private byte[] paddingBytes;
-
     @FieldOrder(index = 2)
-    private int defaultValue;
+    private int paddingBytes;
 
     @FieldOrder(index = 3)
+    private int defaultValue;
+
+    @FieldOrder(index = 4)
     private int npairsCount;
 
     @FieldOrder(index = 5)
@@ -28,11 +27,11 @@ public class LookupswitchOperation extends Operation {
         OperationList.setCodePosition(OperationList.getCodePosition() + 1);
     }
 
-    public byte[] getPaddingBytes() {
+    public int getPaddingBytes() {
         return paddingBytes;
     }
 
-    public void setPaddingBytes(byte[] paddingBytes) {
+    public void setPaddingBytes(int paddingBytes) {
         OperationList.setCodePosition(OperationList.getCodePosition() + getPadding());
 
         this.paddingBytes = paddingBytes;
